@@ -92,7 +92,7 @@ class Config(object):
         if os.path.isfile(self.logging_conf):
             try:
                 with open(self.logging_conf, "r") as _cfg:
-                    local_config = yaml.safe_load(_cfg.read())
+                    local_config = yaml.load(_cfg.read(),Loader=yaml.Loader)
                     logging.config.dictConfig(local_config)
                     global logger
                     logger = logging.getLogger()
@@ -106,7 +106,7 @@ class Config(object):
 
         try:
             with open(self.config_file, "r") as _cfg:
-                local_config = yaml.load(_cfg.read())
+                local_config = yaml.load(_cfg.read(),Loader=yaml.Loader)
         except yaml.YAMLError as exc:
             logger.critical("ERROR: YAML error in configuration "
                             "file: {}".format(exc))
